@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css" />
+        <title>Home</title>
+    </head>
+    <body>
+        <form id="weatherByZipForm">
+          <div>
+            <label for="zip">ZIP Code</label>
+            <input name="zip" id="zip" placeholder="enter zip code here">
+          </div>
+          <div>
+            <label for="zip">Feelings</label>
+            <textarea name="feelings" id="feelings"></textarea>
+          </div>
+          <div>
+            <button id="generate">Generate</button>
+          </div>
+        </form>
+        <div class="entryholder" id="entryHolder">
+          <label>Date</label>
+          <div id="date">-</div>
+          <label>Temperature</label>
+          <div id="temp">-</div>
+          <label>Content</label>
+          <div id="content">-</div>
+        </div>
+        <script src="app.js" type="text/javascript"></script>
+    </body>
+</html>

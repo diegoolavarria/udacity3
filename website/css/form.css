@@ -1,0 +1,20 @@
+label {
+  display: block;
+}
+
+form {
+  margin: auto;
+  text-align: center;
+}
+
+form h2 {
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  line-height: 24px;
+  border-radius: 5px;
+  border: 1px solid #c8c8c8;
+  margin-bottom: 10px;
+}

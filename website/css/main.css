@@ -1,0 +1,27 @@
+body {
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+button {
+  border: 0px;
+  background-color: #d9ddff;
+  line-height: 30px;
+  padding: 0px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.info {
+  font-weight: 700;
+}
