@@ -28,6 +28,7 @@ const postData = async ({ url, data = {} }) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+  console.log("response");
   try {
     console.log("response");
     const newData = await response.json();
@@ -42,49 +43,32 @@ const getCurrentWeather = async (e) => {
   const formData = getDataFromForm(weatherByZipForm);
   const { zip, feelings } = formData;
   const url = `${openWeatherMapUrl}${zip},us&appid=${openWeatherMapApiKey}`;
-  await getData({ url })
-    .then((data) => {
-      console.log({ data });
-      if (data.cod === "404") {
-        dateItem.innerHTML = "-";
-        tempItem.innerHTML = "-";
-        contentItem.innerHTML = "-";
+  await getData({ url }).then(async (data) => {
+    console.log({ data });
+    if (data.cod === "404") {
+      dateItem.innerHTML = "-";
+      tempItem.innerHTML = "-";
+      contentItem.innerHTML = "-";
 
-        dateItem.removeAttribute("class");
-        tempItem.removeAttribute("class");
-        contentItem.removeAttribute("class");
-        alert("zip code not valid");
-      } else {
-        const url = `${baseUrl}/addData`;
-        const newDate = new Date();
-        console.log("1then");
-        return postData({
-          url,
-          data: {
-            temperature: data.main.temp,
-            date: newDate.getTime(),
-            userResponse: feelings,
-          },
-        }).then(() => updateUI());
-      }
-      console.log("s");
-      return;
-    })
-    .then(() => updateUI());
+      dateItem.removeAttribute("class");
+      tempItem.removeAttribute("class");
+      contentItem.removeAttribute("class");
+      alert("zip code not valid");
+    } else {
+      const url = `${baseUrl}/addData`;
+      const newDate = new Date();
+      console.log("1then");
+      await postData({
+        url,
+        data: {
+          temperature: data.main.temp,
+          date: newDate.getTime(),
+          userResponse: feelings,
+        },
+      }).then(async () => await updateUI());
+    }
+  });
 };
-
-// const postWeather = ({ weatherData = {}, feelings }) => {
-//   const url = `${baseUrl}/addData`;
-//   const newDate = new Date();
-//   console.log("call");
-//   postData({
-//     url,
-//     data: {
-
-//     },
-//   });
-
-// };
 
 const updateUI = async () => {
   const url = `${baseUrl}/getProjectData`;
@@ -108,21 +92,6 @@ const updateUI = async () => {
   } catch (error) {
     console.log("error", error);
   }
-  // await getData({ url }).then((data) => {
-  //   console.log({ data });
-  //   if (data.date) {
-  //     dateItem.innerHTML = data.date;
-  //     dateItem.setAttribute("class", "info");
-  //   }
-  //   if (data.temperature) {
-  //     tempItem.innerHTML = data.temperature;
-  //     tempItem.setAttribute("class", "info");
-  //   }
-  //   if (data.userResponse) {
-  //     contentItem.innerHTML = `"${data.userResponse}"`;
-  //     contentItem.setAttribute("class", "info");
-  //   }
-  // });
 };
 
 weatherByZipFormButton.addEventListener("click", getCurrentWeather);

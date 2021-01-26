@@ -15,21 +15,17 @@ app.use(bodyParser.json());
 // Cors for cross origin allowance
 app.use(cors());
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get("/getProjectData", (req, res) => {
-  console.log("getProjectData");
-  console.log({ projectData });
-  res.send(projectData);
-});
-
 app.post("/addData", (req, res) => {
   const newData = req.body;
-
   projectData.temperature = newData.temperature;
   projectData.date = moment(newData.date).format("MM/DD/YYYY, hh:mm");
   projectData.userResponse = newData.userResponse;
-  console.log("addData");
-  console.log({ projectData });
+  res.send(projectData);
+});
+
+// respond with "hello world" when a GET request is made to the homepage
+app.get("/getProjectData", (req, res) => {
+  res.send(projectData);
 });
 
 const server = app.listen(port, () =>
