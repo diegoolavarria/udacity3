@@ -15,9 +15,11 @@ app.use(bodyParser.json());
 // Cors for cross origin allowance
 app.use(cors());
 
+app.use(express.static("website"));
+
 app.post("/addData", (req, res) => {
   const newData = req.body;
-  projectData.temperature = newData.temperature;
+  projectData.temperature = `${newData.temperature} C°`;
   projectData.date = moment(newData.date).format("MM/DD/YYYY, hh:mm");
   projectData.userResponse = newData.userResponse;
   res.send(projectData);

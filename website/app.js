@@ -2,6 +2,7 @@ const baseUrl = "http://localhost:3000";
 const openWeatherMapApiKey = "85acd1ad547c2be25d0cfa4fdfe3a744";
 const openWeatherMapUrl =
   "https://api.openweathermap.org/data/2.5/weather?zip=";
+const suffixUrl = "&units=metric";
 
 const weatherByZipForm = document.getElementById("weatherByZipForm");
 const weatherByZipFormButton = document.getElementById("generate");
@@ -21,16 +22,13 @@ const getData = async ({ url }) => {
 };
 
 const postData = async ({ url, data = {} }) => {
-  console.log("postData");
   const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  console.log("response");
   try {
-    console.log("response");
     const newData = await response.json();
     return newData;
   } catch (error) {
@@ -42,7 +40,7 @@ const getCurrentWeather = async (e) => {
   e.preventDefault();
   const formData = getDataFromForm(weatherByZipForm);
   const { zip, feelings } = formData;
-  const url = `${openWeatherMapUrl}${zip},us&appid=${openWeatherMapApiKey}`;
+  const url = `${openWeatherMapUrl}${zip},us&appid=${openWeatherMapApiKey}${suffixUrl}`;
   await getData({ url }).then(async (data) => {
     console.log({ data });
     if (data.cod === "404") {
@@ -57,7 +55,6 @@ const getCurrentWeather = async (e) => {
     } else {
       const url = `${baseUrl}/addData`;
       const newDate = new Date();
-      console.log("1then");
       await postData({
         url,
         data: {
@@ -75,8 +72,6 @@ const updateUI = async () => {
   const request = await fetch(url);
   try {
     const data = await request.json();
-    console.log("updateUI");
-    console.log({ data });
     if (data.date) {
       dateItem.innerHTML = data.date;
       dateItem.setAttribute("class", "info");
